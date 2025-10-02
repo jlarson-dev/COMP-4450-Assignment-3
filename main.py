@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
+from random import randint
 import joblib
 import time
 import numpy as np
+import pandas as pd
 
 # API
 app = FastAPI(
@@ -16,6 +18,14 @@ try:
 except:
     print("Error: Model file 'sentiment_model.pkl' not found.")
     model = None
+    
+# Load the dataset
+try:
+    df = pd.read_csv('IMDB Dataset.csv')
+    reviews = df['review'].tolist()
+except:
+    print("Error: dataset 'IMDB Dataset.csv' not found.")
+    reviews = None
 class Review(BaseModel):
     text: str
 
@@ -34,6 +44,11 @@ def pred_proba(text: str):
     """Returns confidence score of prediction"""
     model_state()
     return model.predict_proba([text])[0]
+
+def get_rand_review(reviews: list):
+    """Returns a random review from the original IMDB dataset."""
+    numb_reviews = len(reviews)
+    return reviews[randint(0, numb_reviews+1)]
 
 # Middleware runs with each request to add headers
 @app.middleware("http")
@@ -66,7 +81,8 @@ def post_proba(input: Review):
     return {"sentiment": sentiment, "probability": round(probs.max(), 2)}
 
 
-# @app.get("/example")
+@app.get("/example")
 def get_example():
     """Returns a random review from the original IMDB training dataset."""
-    pass
+    rand_review = get_rand_review(reviews=reviews)
+    return {"review": rand_review}
