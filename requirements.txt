@@ -1,7 +1,5 @@
-fastapi
+fastapi[standard]
 pydantic
-random
 joblib
-time
 numpy
 pandas
