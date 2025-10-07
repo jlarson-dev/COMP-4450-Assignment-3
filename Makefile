@@ -6,7 +6,7 @@ build:
 
 run:
 	@echo "Running Docker container"
-	docker run --rm -p 8080:80 $(IMAGE_NAME)
+	docker run --rm -p 8000:8000 $(IMAGE_NAME)
 
 clean:
 	@echo "Removing Docker image"

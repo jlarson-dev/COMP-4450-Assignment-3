@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from random import randint
 import joblib
 import time
-import numpy as np
 import pandas as pd
 
 # API
