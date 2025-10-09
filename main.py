@@ -67,7 +67,7 @@ def health():
 def post_pred(input: Review):
     """Performs a sentiment prediction on an input string"""
     predicted = predict_sentiment(input.text)
-    return {"sentiment": predicted[0]}
+    return {"sentiment": predicted}
 
 
 @app.post("/predict_proba")
