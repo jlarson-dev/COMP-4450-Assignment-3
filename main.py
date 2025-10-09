@@ -14,8 +14,8 @@ app = FastAPI(
 try:
     model = joblib.load('sentiment_model.pkl')
     print("Model 'sentiment_model' loaded successfully.")
-except:
-    print("Error: Model file 'sentiment_model.pkl' not found.")
+except Exception as e:
+    print(f"Failed to load model: {e}")
     model = None
     
 # Load the dataset
